@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+    
+    <h2>Hello</h2>
+    
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // <block:setup:1>
+        const labels = [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+        ];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Trung Tâm Viễn Thông Bạc Liêu',
+                //backgroundColor: 'rgb(255, 99, 132)',
+                backgroundColor: '#DA0037',
+                //borderColor: 'rgb(255, 99, 132)',
+                borderColor: '#DA0037',
+
+                data: [20, 15, 5, 2, 20, 60, 45],
+            }]
+        };
+
+        // </block:setup>
+
+        // <block:config:0>
+        const config = {
+            type: 'bar',
+            data,
+            options: {}
+        };
+        // </block:config>
+
+        module.exports = {
+            actions: [],
+            config: config,
+        };
+    </script>
+    <script>
+        // === include 'setup' then 'config' above ===
+
+        var myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>

@@ -1,0 +1,82 @@
+﻿@model tt.ViewModels.DashBoardByDataTypeVM
+@{
+    ViewBag.Title = "Biểu đồ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2> @Model.LoaiDuLieu.loaiDuLieus[Model.LoaiDuLieu.selected] </h2>
+@*<h2>@Model.TTVT.selected </h2>*@
+@using (Html.BeginForm("HandleRequest", "DashBoard", FormMethod.Post))
+{
+    <select name="loaiDL">
+        @foreach (var item in Model.LoaiDuLieu.loaiDuLieus)
+        {
+            <option Value="@item.Key"> @item.Value </option>
+        }
+    </select>
+    
+    <input type="submit" value="Apply" />
+}
+<div style="width: 1200px">
+    <canvas id="myChart"></canvas>
+</div>
+@*<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>*@
+<script src = "../Scripts/Chart.js"> </script>
+<script>
+    const data = @Html.Raw(Json.Encode(Model.BarChartData));
+    console.log(data);
+    // <block:config:0>
+    const config = {
+        type: 'bar',
+        data,
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Tháng - Năm',
+                        color: '#2c7fb8',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            weight: 'bold',
+                            lineHeight: 1.2,
+                        },
+                        padding: { top: 20, left: 0, right: 0, bottom: 0 }
+                    }
+                },
+                y: {
+                    display: true,
+                    title: {
+                        display: true,
+                        text: 'Số lượng / Tỷ lệ (%)',
+                        color: '#2c7fb8',
+                        font: {
+                            family: 'Times',
+                            size: 20,
+                            weight:'bold',
+                            style: 'normal',
+                            lineHeight: 1.2
+                        },
+                        padding: { top: 30, left: 0, right: 0, bottom: 0 }
+                    }
+                }
+            },
+            bezierCurve: true
+        }
+    };
+    // </block:config>
+    module.exports = {
+        actions: [],
+        config: config,
+    };
+</script>
+<script>
+    // === include 'setup' then 'config' above ===
+    var myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
+
